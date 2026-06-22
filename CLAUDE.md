@@ -2,6 +2,10 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Communication Style
+
+- Do not use em dashes (--) in responses. Use commas, colons, or rephrase instead.
+
 ## Commands
 
 Run the word count test (sequential mode):
@@ -49,6 +53,26 @@ This is a CS 345 MapReduce implementation in Go (`module cs345`). The framework 
 2. `doMap` writes intermediate files `mrtmp.<job>-<mapTask>-<reduceTask>` (one per reduce bucket).
 3. `doReduce` reads all intermediate files for its reduce task, sorts, reduces, writes `mrtmp.<job>-res-<reduceTask>` as JSON.
 4. Master merges reduce outputs into final `mrtmp.<job>`.
+
+## Git Workflow
+
+| When | Action |
+|------|--------|
+| Finish a logical unit of work (one function, one part) | Commit |
+| End of a work session | Push |
+| Before starting something risky (refactor, experiment) | Commit first |
+| Before submission | Push + verify on GitHub |
+
+**Project checkpoint order:**
+1. `doMap` in `mapreduce/common_map.go` — commit when done
+2. `doReduce` in `mapreduce/common_reduce.go` — commit when done
+3. `mapF`/`reduceF` in `main/wc.go` — commit when done
+4. All tests passing — push final version before submitting
+
+To push:
+```bash
+git push
+```
 
 ### Key constraints
 - Intermediate and output files use JSON encoding (`encoding/json`).
